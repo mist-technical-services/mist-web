@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIST Technical Services — UAE</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810;
+  --s1:#0a0f1e;
+  --s2:#0d1425;
+  --card:#111827;
+  --border:rgba(6,182,212,0.12);
+  --c1:#06b6d4;
+  --c2:#0ea5e9;
+  --c3:#22d3ee;
+  --gold:#f59e0b;
+  --green:#10b981;
+  --red:#ef4444;
+  --text:#f1f5f9;
+  --muted:#64748b;
+  --soft:#94a3b8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* Custom cursor */
+.cursor{position:fixed;width:8px;height:8px;background:var(--c1);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(6,182,212,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.15s ease;mix-blend-mode:difference}
+
+/* BG FX */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-mesh::before{content:'';position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(6,182,212,0.06) 0%,transparent 70%);top:-200px;left:-200px;animation:drift1 20s infinite alternate ease-in-out}
+.bg-mesh::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(14,165,233,0.05) 0%,transparent 70%);bottom:-100px;right:-100px;animation:drift2 25s infinite alternate ease-in-out}
+@keyframes drift1{to{transform:translate(100px,80px)}}
+@keyframes drift2{to{transform:translate(-80px,-60px)}}
+
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(6,182,212,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.025) 1px,transparent 1px);
+  background-size:80px 80px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);border-bottom:1px solid rgba(6,182,212,0.06);transition:all 0.3s}
+nav.scrolled{background:rgba(5,8,16,0.95);padding:14px 40px}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:20px;letter-spacing:3px;color:var(--c1);text-decoration:none}
+.nav-logo span{color:var(--text)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--soft);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--c1);transition:width 0.3s}
+.nav-links a:hover{color:var(--c1)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:10px 22px;border-radius:6px;font-size:12px;font-weight:500;letter-spacing:1px;text-decoration:none;text-transform:uppercase;transition:all 0.2s}
+.nav-cta:hover{box-shadow:0 0 24px rgba(6,182,212,0.4);transform:translateY(-1px)}
+.nav-mobile-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-mobile-btn span{width:24px;height:2px;background:var(--c1);display:block;transition:all 0.3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:120px 40px 80px;overflow:hidden}
+.hero-content{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.hero-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse-green 2s infinite}
+@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
+.hero-eyebrow-text{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--soft)}
+.hero-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(48px,6vw,80px);line-height:1;margin-bottom:8px;letter-spacing:2px}
+.hero-title .line1{color:var(--text)}
+.hero-title .line2{background:linear-gradient(90deg,var(--c1),var(--c3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-family:'Syne',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.hero-divider{width:60px;height:2px;background:linear-gradient(90deg,var(--c1),transparent);margin-bottom:24px}
+.hero-desc{font-size:16px;line-height:1.8;color:var(--soft);max-width:480px;margin-bottom:40px}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:14px 28px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;letter-spacing:0.5px;transition:all 0.3s;border:none;cursor:pointer}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(6,182,212,0.4)}
+.btn-secondary{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--border);color:var(--text);padding:14px 28px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;letter-spacing:0.5px;transition:all 0.3s;cursor:pointer}
+.btn-secondary:hover{border-color:var(--c1);color:var(--c1);background:rgba(6,182,212,0.04)}
+.btn-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E)!important}
+.btn-whatsapp:hover{box-shadow:0 12px 32px rgba(37,211,102,0.35)!important}
+
+/* Hero right — glowing card */
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
+.hero-card{background:linear-gradient(135deg,rgba(6,182,212,0.06),rgba(14,165,233,0.03));border:1px solid rgba(6,182,212,0.15);border-radius:24px;padding:40px;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
+.hero-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(transparent,rgba(6,182,212,0.05),transparent 30%);animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-card-inner{position:relative;z-index:1}
+.hero-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.hstat{background:rgba(255,255,255,0.03);border:1px solid rgba(6,182,212,0.1);border-radius:12px;padding:20px;text-align:center;transition:all 0.3s}
+.hstat:hover{border-color:rgba(6,182,212,0.3);background:rgba(6,182,212,0.05)}
+.hstat-num{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--c1),var(--c3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hstat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:100px;padding:8px 16px;font-size:12px;color:var(--gold);font-weight:500;margin-bottom:24px;letter-spacing:1px}
+
+/* FLOATING SOCIAL */
+.float-social{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:50}
+.fsoc-btn{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.3s;border:1px solid rgba(255,255,255,0.08)}
+.fsoc-btn:hover{transform:scale(1.1) translateX(-4px);border-color:transparent}
+.fsoc-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.fsoc-fb{background:linear-gradient(135deg,#1877F2,#0d5bbd)}
+.fsoc-ig{background:linear-gradient(135deg,#E1306C,#833AB4,#F56040)}
+.fsoc-em{background:linear-gradient(135deg,var(--c1),var(--c2))}
+.fsoc-ph{background:linear-gradient(135deg,var(--green),#059669)}
+
+/* SECTION COMMON */
+section{position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+.section-pad{padding:100px 0}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--c1);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.sec-label::before{content:'';width:30px;height:1px;background:var(--c1)}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin-bottom:48px}
+.sec-title em{font-style:normal;color:var(--c1)}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:all 0.4s;group:true}
+.svc-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,182,212,0.04),transparent);opacity:0;transition:opacity 0.4s}
+.svc-card:hover{border-color:rgba(6,182,212,0.3);transform:translateY(-6px);box-shadow:0 24px 48px rgba(0,0,0,0.4),0 0 30px rgba(6,182,212,0.06)}
+.svc-card:hover::after{opacity:1}
+.svc-number{font-family:'Orbitron',monospace;font-size:11px;color:rgba(6,182,212,0.4);letter-spacing:2px;margin-bottom:20px}
+.svc-icon-wrap{width:52px;height:52px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;transition:all 0.3s}
+.svc-card:hover .svc-icon-wrap{background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.3)}
+.svc-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px}
+.svc-desc{font-size:14px;color:var(--soft);line-height:1.7}
+.svc-arrow{position:absolute;bottom:24px;right:24px;color:rgba(6,182,212,0.3);font-size:20px;transition:all 0.3s}
+.svc-card:hover .svc-arrow{color:var(--c1);transform:translate(4px,-4px)}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.why-card{padding:28px;border-radius:14px;border:1px solid var(--border);background:var(--card);transition:all 0.3s}
+.why-card:hover{border-color:rgba(6,182,212,0.25);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+.why-icon{font-size:28px;margin-bottom:14px}
+.why-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px}
+.why-text{font-size:13px;color:var(--soft);line-height:1.6}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proj-card{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--card);transition:all 0.3s;position:relative}
+.proj-card:hover{border-color:rgba(6,182,212,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+.proj-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
+.proj-img-hvac{background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(14,165,233,0.05))}
+.proj-img-tower{background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(239,68,68,0.05))}
+.proj-img-office{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05))}
+.proj-tag{position:absolute;top:12px;left:12px;font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.2);color:var(--c1);padding:4px 10px;border-radius:4px}
+.proj-body{padding:24px}
+.proj-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px}
+.proj-desc{font-size:13px;color:var(--soft);line-height:1.6;margin-bottom:16px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.proj-tag-chip{font-size:11px;padding:3px 10px;border-radius:4px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);color:var(--c3);letter-spacing:0.5px}
+
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;position:relative}
+.testi-card:hover{border-color:rgba(6,182,212,0.2);transform:translateY(-3px)}
+.testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:16px}
+.testi-quote{position:absolute;top:20px;right:20px;font-size:40px;color:rgba(6,182,212,0.08);font-family:Georgia,serif;line-height:1}
+.testi-text{font-size:14px;color:var(--soft);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:16px}
+.testi-name{font-weight:600;font-size:14px}
+.testi-company{font-size:12px;color:var(--muted)}
+
+/* LOCATIONS */
+.locations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.loc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:all 0.3s;text-decoration:none;color:inherit}
+.loc-card:hover{border-color:rgba(6,182,212,0.3);transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,0.3)}
+.loc-icon{font-size:28px;margin-bottom:12px}
+.loc-city{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px}
+.loc-role{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--c1);margin-bottom:6px}
+.loc-detail{font-size:13px;color:var(--soft)}
+
+/* CERTS */
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;transition:all 0.3s}
+.cert-card:hover{border-color:rgba(245,158,11,0.3)}
+.cert-icon{font-size:36px;margin-bottom:16px}
+.cert-title{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+.cert-desc{font-size:13px;color:var(--soft);line-height:1.6}
+
+/* ORG CHART */
+.org-wrap{overflow-x:auto;padding:20px 0}
+.org-chart{display:flex;flex-direction:column;align-items:center;gap:0;min-width:700px}
+.org-node{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 20px;text-align:center;transition:all 0.3s;min-width:160px}
+.org-node.root{background:linear-gradient(135deg,rgba(6,182,212,0.12),rgba(14,165,233,0.06));border-color:rgba(6,182,212,0.3);min-width:220px}
+.org-node.manager{background:rgba(245,158,11,0.06);border-color:rgba(245,158,11,0.2)}
+.org-node-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.org-node-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.org-connector{width:1px;height:28px;background:linear-gradient(to bottom,rgba(6,182,212,0.3),rgba(6,182,212,0.1));margin:0 auto}
+.org-row{display:flex;gap:16px;justify-content:center;position:relative}
+.org-row::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:rgba(6,182,212,0.15)}
+.org-col{display:flex;flex-direction:column;align-items:center}
+.org-col-connector{width:1px;height:20px;background:rgba(6,182,212,0.2)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.contact-info{display:flex;flex-direction:column;gap:20px}
+.contact-item{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;transition:all 0.3s}
+.contact-item:hover{border-color:rgba(6,182,212,0.3);transform:translateX(4px)}
+.contact-item-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ci-phone{background:linear-gradient(135deg,var(--green),#059669)}
+.ci-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.ci-email{background:linear-gradient(135deg,var(--c1),var(--c2))}
+.ci-loc{background:linear-gradient(135deg,var(--gold),#d97706)}
+.contact-item-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.contact-item-value{font-size:15px;font-weight:500}
+.contact-form-wrap{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px}
+.form-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:24px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(6,182,212,0.4)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--s2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;border:none;border-radius:8px;padding:14px;font-size:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;font-family:'DM Sans',sans-serif}
+.submit-btn:hover{box-shadow:0 8px 24px rgba(6,182,212,0.4);transform:translateY(-2px)}
+
+/* EMERGENCY STRIP */
+.emergency{background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.03));border-top:1px solid rgba(239,68,68,0.15);border-bottom:1px solid rgba(239,68,68,0.15);padding:40px;text-align:center;position:relative;overflow:hidden}
+.emergency::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(239,68,68,0.04),transparent 60%)}
+.em-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.em-pulse{width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse-red 1s infinite}
+@keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+.em-num{font-family:'Orbitron',monospace;font-size:clamp(28px,5vw,48px);font-weight:900;color:var(--text);margin-bottom:16px;letter-spacing:2px}
+.em-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+
+/* SOCIAL SECTION */
+.social-row{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.soc-card{display:flex;align-items:center;gap:12px;padding:16px 24px;border-radius:12px;text-decoration:none;color:#fff;font-weight:500;font-size:14px;transition:all 0.3s}
+.soc-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.4)}
+.soc-fb{background:linear-gradient(135deg,#1877F2,#0d5bbd)}
+.soc-ig{background:linear-gradient(135deg,#E1306C,#833AB4)}
+.soc-wa{background:linear-gradient(135deg,#25D366,#128C7E)}
+.soc-em{background:linear-gradient(135deg,var(--c1),var(--c2))}
+
+/* FOOTER */
+footer{background:var(--s1);border-top:1px solid rgba(6,182,212,0.08);padding:40px;text-align:center}
+.footer-logo{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:var(--c1);letter-spacing:4px;margin-bottom:12px}
+.footer-logo span{color:var(--text)}
+.footer-text{font-size:13px;color:var(--muted)}
+.footer-links{display:flex;justify-content:center;gap:24px;margin:16px 0;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--soft);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--c1)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+/* MOBILE */
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:40px}
+  .hero-visual{display:none}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  nav{padding:16px 24px}
+  .nav-links{display:none}
+  .nav-mobile-btn{display:flex}
+  .container{padding:0 24px}
+  .section-pad{padding:70px 0}
+  .float-social{right:12px}
+  .fsoc-btn{width:40px;height:40px}
+  .cursor,.cursor-ring{display:none}
+  body{cursor:auto}
+}
+@media(max-width:600px){
+  .why-grid{grid-template-columns:1fr}
+  .hero-stats-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* Mobile nav open */
+.mobile-nav{position:fixed;inset:0;background:rgba(5,8,16,0.98);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;transform:translateX(100%);transition:transform 0.4s ease}
+.mobile-nav.open{transform:none}
+.mobile-nav a{font-family:'Syne',sans-serif;font-size:28px;font-weight:700;color:var(--text);text-decoration:none;transition:color 0.2s}
+.mobile-nav a:hover{color:var(--c1)}
+.mobile-nav-close{position:absolute;top:24px;right:24px;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Background -->
+<div class="bg-mesh"></div>
+<div class="grid-bg"></div>
+
+<!-- Floating Social -->
+<div class="float-social">
+  <a href="https://wa.me/971569596119" target="_blank" class="fsoc-btn fsoc-wa" title="WhatsApp">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+  <a href="tel:+971569596119" class="fsoc-btn fsoc-ph" title="Call">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.61a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+  </a>
+  <a href="https://www.facebook.com/share/17xPqXBGVB/" target="_blank" class="fsoc-btn fsoc-fb" title="Facebook">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/mist66660?igsh=NjMyZTU5Z2llcTNp" target="_blank" class="fsoc-btn fsoc-ig" title="Instagram">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+  </a>
+  <a href="mailto:misttechnicalservices@gmail.com" class="fsoc-btn fsoc-em" title="Email">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">MIST<span>·TS</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#coverage">Coverage</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/971569596119" class="nav-cta" target="_blank">WhatsApp Us</a>
+  <div class="nav-mobile-btn" id="mobileBtn">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileClose">✕</button>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#clients" onclick="closeMobileNav()">Clients</a>
+  <a href="#coverage" onclick="closeMobileNav()">Coverage</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        <span class="hero-eyebrow-text">Live · Sharjah, UAE — GCC Operations</span>
+      </div>
+      <h1 class="hero-title">
+        <div class="line1">MIST</div>
+        <div class="line2">TECHNICAL</div>
+        <div class="line1">SERVICES</div>
+      </h1>
+      <p class="hero-sub">Building Maintenance · UAE & GCC</p>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">Your trusted partner for comprehensive building maintenance, technical installations, HVAC systems, and facility management across the UAE and GCC region.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/971569596119" class="btn-primary btn-whatsapp" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+        <a href="#services" class="btn-secondary">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-inner">
+          <div class="hero-badge">🏆 ISO 9001:2015 Certified</div>
+          <div class="hero-stats-grid">
+            <div class="hstat"><div class="hstat-num">7+</div><div class="hstat-label">Services</div></div>
+            <div class="hstat"><div class="hstat-num">5+</div><div class="hstat-label">UAE Cities</div></div>
+            <div class="hstat"><div class="hstat-num">24/7</div><div class="hstat-label">Emergency</div></div>
+            <div class="hstat"><div class="hstat-num">3</div><div class="hstat-label">Certifications</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-pad" id="services">
+  <div class="container">
+    <p class="sec-label reveal">What We Do</p>
+    <h2 class="sec-title reveal">Our <em>Services</em></h2>
+    <div class="services-grid">
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-number">01 · SERVICE</div>
+        <div class="svc-icon-wrap">❄️</div>
+        <div class="svc-name">HVAC Chiller Systems</div>
+        <div class="svc-desc">Complete pump maintenance, diagnostics, and repair for commercial & industrial HVAC chiller systems ensuring peak operational efficiency year-round.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-number">02 · SERVICE</div>
+        <div class="svc-icon-wrap">🏢</div>
+        <div class="svc-name">Annual Property Maintenance</div>
+        <div class="svc-desc">Comprehensive annual contracts for building upkeep — scheduled inspections, preventive maintenance, and on-call support for all property types.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-3">
+        <div class="svc-number">03 · SERVICE</div>
+        <div class="svc-icon-wrap">🪵</div>
+        <div class="svc-name">Carpentry & Wood Flooring</div>
+        <div class="svc-desc">Custom carpentry solutions and professional wood flooring installations for residential and commercial spaces across the UAE.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-number">04 · SERVICE</div>
+        <div class="svc-icon-wrap">🔧</div>
+        <div class="svc-name">Plumbing & Sanitary</div>
+        <div class="svc-desc">Expert installation and repair of plumbing systems, sanitary fixtures, and water supply infrastructure to full UAE code compliance.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-2">
+        <div class="svc-number">05 · SERVICE</div>
+        <div class="svc-icon-wrap">🏗️</div>
+        <div class="svc-name">False Ceiling & Partitions</div>
+        <div class="svc-desc">Precision false ceiling systems and light partition installations for offices, retail, hospitality, and mixed-use environments.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-3">
+        <div class="svc-number">06 · SERVICE</div>
+        <div class="svc-icon-wrap">⚡</div>
+        <div class="svc-name">Electrical Works</div>
+        <div class="svc-desc">Electrical fittings, fixture replacement, fault finding, and full maintenance programs for commercial and residential properties.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal reveal-delay-1">
+        <div class="svc-number">07 · SERVICE</div>
+        <div class="svc-icon-wrap">🪟</div>
+        <div class="svc-name">Tiling & Painting</div>
+        <div class="svc-desc">Floor and wall tiling with premium finishes, plus interior and exterior painting services for all property sizes and types.</div>
+        <div class="svc-arrow">↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section-pad" style="background:linear-gradient(180deg,transparent,rgba(6,182,212,0.02),transparent)">
+  <div class="container">
+    <p class="sec-label reveal">Why Choose MIST</p>
+    <h2 class="sec-title reveal">Client <em>Benefits</em></h2>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">Fast Response</div>
+        <div class="why-text">Emergency callouts answered within 2 hours across Sharjah, Dubai & Abu Dhabi regions.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">Certified Quality</div>
+        <div class="why-text">ISO 9001:2015 certified operations ensuring consistent, high-quality service delivery every time.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-icon">💰</div>
+        <div class="why-title">Cost-Effective</div>
+        <div class="why-text">Competitive annual contracts that reduce long-term maintenance costs by up to 40% vs ad-hoc repairs.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">🌿</div>
+        <div class="why-title">Eco-Compliant</div>
+        <div class="why-text">All work adheres to UAE environmental regulations and green building standards.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">👷</div>
+        <div class="why-title">Expert Teams</div>
+        <div class="why-text">Trained, licensed technicians with deep knowledge across MEP, HVAC, and civil works.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-icon">📋</div>
+        <div class="why-title">One-Stop Shop</div>
+        <div class="why-text">From HVAC to tiling to electrical — one trusted partner for all your building maintenance needs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section-pad" id="projects">
+  <div class="container">
+    <p class="sec-label reveal">Our Work</p>
+    <h2 class="sec-title reveal">Projects <em>Showcase</em></h2>
+    <div class="projects-grid">
+      <div class="proj-card reveal reveal-delay-1">
+        <div class="proj-img proj-img-hvac"><span>❄️</span><span class="proj-tag">PROJECT 01</span></div>
+        <div class="proj-body">
+          <div class="proj-name">Commercial HVAC System</div>
+          <div class="proj-desc">Complete design, installation, and commissioning of a commercial chiller system with full post-handover maintenance program.</div>
+          <div class="proj-tags"><span class="proj-tag-chip">HVAC</span><span class="proj-tag-chip">Chiller</span><span class="proj-tag-chip">Commercial</span></div>
+        </div>
+      </div>
+      <div class="proj-card reveal reveal-delay-2">
+        <div class="proj-img proj-img-tower"><span>🏗️</span><span class="proj-tag">PROJECT 02</span></div>
+        <div class="proj-body">
+          <div class="proj-name">High-Rise Tower Maintenance</div>
+          <div class="proj-desc">Annual building maintenance contract for a 40-story residential tower covering all MEP systems and emergency response protocols.</div>
+          <div class="proj-tags"><span class="proj-tag-chip">High-Rise</span><span class="proj-tag-chip">Annual Contract</span><span class="proj-tag-chip">MEP</span></div>
+        </div>
+      </div>
+      <div class="proj-card reveal reveal-delay-3">
+        <div class="proj-img proj-img-office"><span>🏢</span><span class="proj-tag">PROJECT 03</span></div>
+        <div class="proj-body">
+          <div class="proj-name">Corporate Office Fit-Out</div>
+          <div class="proj-desc">Precision false ceiling and lighting partition installations across a multi-floor corporate office — completed on time, within spec.</div>
+          <div class="proj-tags"><span class="proj-tag-chip">False Ceiling</span><span class="proj-tag-chip">Fit-Out</span><span class="proj-tag-chip">Corporate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-pad" id="clients">
+  <div class="container">
+    <p class="sec-label reveal">Client Feedback</p>
+    <h2 class="sec-title reveal">What Clients <em>Say</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Excellent and reliable service! MIST responded quickly and resolved our HVAC issues professionally. Will definitely use again.</div>
+        <div class="testi-author"><div class="testi-avatar">👨‍💼</div><div><div class="testi-name">Saeed Al-Mansoori</div><div class="testi-company">Al Getako Properties</div></div></div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Professional team, exceptional results. Every job is done neatly and on time. Our go-to contractor for all building maintenance needs.</div>
+        <div class="testi-author"><div class="testi-avatar">👩‍💼</div><div><div class="testi-name">Aisha Khan</div><div class="testi-company">CEO, Tech Solutions</div></div></div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">MIST transformed our facility management. Their team is knowledgeable, punctual, and always goes the extra mile. Thank you!</div>
+        <div class="testi-author"><div class="testi-avatar">👨‍💼</div><div><div class="testi-name">Khalid Al-Hamed</div><div class="testi-company">Owner, Grand Hotel</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORG CHART -->
+<section class="section-pad">
+  <div class="container">
+    <p class="sec-label reveal">Company Structure</p>
+    <h2 class="sec-title reveal">Organizational <em>Chart</em></h2>
+    <div class="org-wrap reveal">
+      <div class="org-chart">
+        <div class="org-node root"><div class="org-node-title">MIST Technical Services</div><div class="org-node-sub">Headquarters · Sharjah, UAE</div></div>
+        <div class="org-connector"></div>
+        <div class="org-node manager"><div class="org-node-title">Priyesh Prabhakaran</div><div class="org-node-sub">Operations Manager</div></div>
+        <div class="org-connector"></div>
+        <div class="org-row">
+          <div class="org-col"><div class="org-col-connector"></div><div class="org-node"><div class="org-node-title">Commercial HVAC</div><div class="org-node-sub">Technical Division</div></div></div>
+          <div class="org-col"><div class="org-col-connector"></div><div class="org-node"><div class="org-node-title">Facility Management</div><div class="org-node-sub">Property Division</div></div></div>
+          <div class="org-col"><div class="org-col-connector"></div><div class="org-node"><div class="org-node-title">Technical Installations</div><div class="org-node-sub">Works Division</div></div></div>
+          <div class="org-col"><div class="org-col-connector"></div><div class="org-node"><div class="org-node-title">Construction Services</div><div class="org-node-sub">Build Division</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="section-pad" id="coverage">
+  <div class="container">
+    <p class="sec-label reveal">Where We Operate</p>
+    <h2 class="sec-title reveal">Geographic <em>Coverage</em></h2>
+    <div class="locations-grid">
+      <div class="loc-card reveal reveal-delay-1">
+        <div class="loc-icon">🏙️</div>
+        <div class="loc-city">Sharjah</div>
+        <div class="loc-role">Headquarters</div>
+        <div class="loc-detail">Shams Business Center, Media City Zone</div>
+      </div>
+      <div class="loc-card reveal reveal-delay-2">
+        <div class="loc-icon">🌆</div>
+        <div class="loc-city">Dubai</div>
+        <div class="loc-role">Sales & Logistics Hub</div>
+        <div class="loc-detail">Commercial operations and client services</div>
+      </div>
+      <div class="loc-card reveal reveal-delay-3">
+        <div class="loc-icon">🏛️</div>
+        <div class="loc-city">Abu Dhabi</div>
+        <div class="loc-role">Branch & Project Site</div>
+        <div class="loc-detail">Active project operations in Abu Dhabi region</div>
+      </div>
+      <div class="loc-card reveal reveal-delay-1">
+        <div class="loc-icon">🏭</div>
+        <div class="loc-city">Fujairah</div>
+        <div class="loc-role">Chiller Maintenance Plant</div>
+        <div class="loc-detail">Specialized chiller service facility</div>
+      </div>
+      <div class="loc-card reveal reveal-delay-2">
+        <div class="loc-icon">🌊</div>
+        <div class="loc-city">Muscat, Oman</div>
+        <div class="loc-role">Regional Branch</div>
+        <div class="loc-detail">Gulf regional operations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section-pad">
+  <div class="container">
+    <p class="sec-label reveal">Standards & Compliance</p>
+    <h2 class="sec-title reveal">Certifications & <em>Compliance</em></h2>
+    <div class="certs-grid">
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-icon">🏅</div>
+        <div class="cert-title">ISO 9001:2015</div>
+        <div class="cert-desc">Quality Management System certification ensuring consistent delivery of high-quality technical services and client satisfaction.</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-2">
+        <div class="cert-icon">🌿</div>
+        <div class="cert-title">Environmental Compliance</div>
+        <div class="cert-desc">Certified adherence to UAE environmental regulations for all HVAC, plumbing, and building services work performed.</div>
+      </div>
+      <div class="cert-card reveal reveal-delay-3">
+        <div class="cert-icon">⚠️</div>
+        <div class="cert-title">Safety Standard Certification</div>
+        <div class="cert-desc">Full health and safety compliance certification across all worksites, ensuring safe operations for staff and clients.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY -->
+<div class="emergency reveal">
+  <div class="em-label"><div class="em-pulse"></div>24/7 Emergency Service Available</div>
+  <div class="em-num">+971 569 596 119</div>
+  <div class="em-actions">
+    <a href="tel:+971569596119" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.61a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      Call Now
+    </a>
+    <a href="https://wa.me/971569596119" class="btn-primary btn-whatsapp" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Emergency
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="section-pad" id="contact">
+  <div class="container">
+    <p class="sec-label reveal">Get In Touch</p>
+    <h2 class="sec-title reveal">Book a <em>Service</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <a href="tel:+971569596119" class="contact-item reveal">
+          <div class="contact-item-icon ci-phone">📞</div>
+          <div><div class="contact-item-label">Phone</div><div class="contact-item-value">+971 569 596 119</div></div>
+        </a>
+        <a href="https://wa.me/971569596119" class="contact-item reveal reveal-delay-1" target="_blank">
+          <div class="contact-item-icon ci-wa">💬</div>
+          <div><div class="contact-item-label">WhatsApp</div><div class="contact-item-value">+971 569 596 119</div></div>
+        </a>
+        <a href="mailto:misttechnicalservices@gmail.com" class="contact-item reveal reveal-delay-2">
+          <div class="contact-item-icon ci-email">✉️</div>
+          <div><div class="contact-item-label">Email</div><div class="contact-item-value">misttechnicalservices@gmail.com</div></div>
+        </a>
+        <div class="contact-item reveal reveal-delay-3">
+          <div class="contact-item-icon ci-loc">📍</div>
+          <div><div class="contact-item-label">Office</div><div class="contact-item-value">Shams Business Center, Media City Zone, Al Messaned, Sharjah, UAE</div></div>
+        </div>
+        <!-- Social Links -->
+        <div class="reveal">
+          <p class="sec-label" style="margin-bottom:16px">Follow Us</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="https://www.facebook.com/share/17xPqXBGVB/" target="_blank" class="soc-card soc-fb">
+              <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>Facebook
+            </a>
+            <a href="https://www.instagram.com/mist66660?igsh=NjMyZTU5Z2llcTNp" target="_blank" class="soc-card soc-ig">
+              <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal">
+        <div class="form-title">Send a Request</div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your full name">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="+971 xxx xxx xxx">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service Type</label>
+          <select>
+            <option value="">Select a service</option>
+            <option>HVAC Chiller Systems</option>
+            <option>Annual Property Maintenance</option>
+            <option>Carpentry & Wood Flooring</option>
+            <option>Plumbing & Sanitary</option>
+            <option>False Ceiling & Partitions</option>
+            <option>Electrical Works</option>
+            <option>Tiling & Painting</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Describe your service request..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="sendViaWhatsApp()">Send via WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MIST<span>·TS</span></div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#clients">Clients</a>
+    <a href="#coverage">Coverage</a>
+    <a href="#contact">Contact</a>
+    <a href="https://www.facebook.com/share/17xPqXBGVB/" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/mist66660?igsh=NjMyZTU5Z2llcTNp" target="_blank">Instagram</a>
+  </div>
+  <div class="footer-text">© 2026 MIST Technical Services · Shams Business Center, Sharjah, UAE · All Rights Reserved</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+if(cursor&&ring){
+  document.addEventListener('mousemove',e=>{
+    cursor.style.left=e.clientX-4+'px';
+    cursor.style.top=e.clientY-4+'px';
+    ring.style.left=e.clientX-18+'px';
+    ring.style.top=e.clientY-18+'px';
+  });
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.transform='scale(1.6)';ring.style.borderColor='rgba(6,182,212,0.8)'});
+    el.addEventListener('mouseleave',()=>{ring.style.transform='scale(1)';ring.style.borderColor='rgba(6,182,212,0.4)'});
+  });
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Navbar scroll
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Mobile nav
+const btn=document.getElementById('mobileBtn');
+const mNav=document.getElementById('mobileNav');
+const mClose=document.getElementById('mobileClose');
+btn.addEventListener('click',()=>mNav.classList.add('open'));
+mClose.addEventListener('click',()=>mNav.classList.remove('open'));
+function closeMobileNav(){mNav.classList.remove('open')}
+
+// WhatsApp form
+function sendViaWhatsApp(){
+  const name=document.querySelector('input[placeholder="Your full name"]').value||'Not provided';
+  const phone=document.querySelector('input[type="tel"]').value||'Not provided';
+  const service=document.querySelector('select').value||'Not specified';
+  const msg=document.querySelector('textarea').value||'';
+  const text=`Hello MIST Technical Services!%0A%0AName: ${name}%0APhone: ${phone}%0AService: ${service}%0AMessage: ${msg}`;
+  window.open(`https://wa.me/971569596119?text=${text}`,'_blank');
+}
+</script>
+</body>
+</html>
+
